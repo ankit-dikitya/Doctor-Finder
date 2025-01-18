@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Appointment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('background6.jpg'); 
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .appointment-form {
+            background: rgba(255, 255, 255, 0.4); 
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(5px);
+        }
+        .appointment-form h2 {
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+            font-size: 24px;
+        }
+        .appointment-form label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+        }
+        .appointment-form input,
+        .appointment-form select,
+        .appointment-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        .appointment-form button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .appointment-form button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <form class="appointment-form">
+        <h2>Book Your Appointment</h2>
+        <label for="name">Full Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+        <label for="email">Email Address:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <label for="phone">Phone Number:</label>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+
+        <label for="date">Appointment Date:</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="time">Preferred Time:</label>
+        <input type="time" id="time" name="time" required>
+
+        <label for="doctor">Select Doctor:</label>
+        <select id="doctor" name="doctor" required>
+            <option value="">--Select a Doctor--</option>
+            <option value="dr_smith">Dr. Smith - Cardiologist</option>
+            <option value="dr_jones">Dr. Jones - Dermatologist</option>
+            <option value="dr_williams">Dr. Williams - Pediatrician</option>
+            <option value="dr_brown">Dr. Brown - Orthopedic</option>
+        </select>
+
+        <label for="message">Additional Notes:</label>
+        <textarea id="message" name="message" rows="4" placeholder="Enter any additional details"></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
