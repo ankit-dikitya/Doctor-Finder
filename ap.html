@@ -137,12 +137,13 @@
             const timeSelect = document.getElementById('time');
             timeSelect.innerHTML = '<option value="">--Select a Time--</option>';
 
-            const startTime = 9; 
-            const endTime = 17; 
-            const interval = 10; 
+            const startTime = 9; // 9:00 AM
+            const endTime = 17; // 5:00 PM
+            const interval = 10; // 10 minutes
 
             for (let hour = startTime; hour < endTime; hour++) {
-                for (let minute = 0; minute < 60; minute += interval) 
+                for (let minute = 0; minute < 60; minute += interval) {
+                    // Skip lunch break from 1:00 PM to 2:00 PM
                     if (hour === 13) {
                         break;
                     }
@@ -169,6 +170,8 @@
                 time: document.getElementById('time').value,
                 additionalNotes: document.getElementById('additionalNotes').value
             };
+
+            // Convert formData to a string to download as a text file
             const dataString = `
                 Appointment Booking:
                 Name: ${formData.name}
