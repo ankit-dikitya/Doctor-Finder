@@ -6,13 +6,13 @@
     <title>Book Your Appointment</title>
     <style>
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: Arial, Helvetica,sans-serif;
             margin: 0;
             padding: 0;
             background-image: url('background6.jpg');
             background-size: cover;
             background-position: center;
-            background-color: #f0f0f0;
+            background-color:#f0f0f0;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -26,17 +26,17 @@
             width: 100%;
             max-width: 400px;
             backdrop-filter: blur(8px);
-            position: relative;
-            z-index: 1;
+            position:relative;
+            z-index:1;
         }
         .appointment-form h2 {
             margin-bottom: 20px;
             color: #000;
             text-align: center;
             font-size: 24px;
-            font-weight: bold;
-            position: relative;
-            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+            font-weight:bold;
+            position:relative;
+            text-shadow:1px 1px 2px rgba(255,255,255,0.8);
         }
         .appointment-form label {
             display: block;
@@ -70,7 +70,9 @@
     </style>
 </head>
 <body>
+    <form action="app.php" method="POST"></form>
     <form class="appointment-form" id="appointmentForm">
+        
         <h2>Book Your Appointment</h2>
 
         <label for="name">Full Name:</label>
@@ -112,13 +114,13 @@
 
     <script>
         const doctors = {
-            cardiologist: ["Dr. Priya Sharma", "Dr. Rajesh Gupta", "Dr. Meera Iyer"],
+            cardiologist: ["Dr. Priya Sharma", "Dr. Rajesh Gupta","Dr. Meera Iyer"],
             dermatologist: ["Dr. Kavita Reddy", "Dr. Soham Das"],
             pediatrician: ["Dr. Suman Patil", "Dr. Ravi Sharma"],
             orthopedic: ["Dr. Anjali Mehta", "Dr. Ramesh Verma"]
         };
 
-        document.getElementById('specialization').addEventListener('change', function () {
+        document.getElementById('specialization').addEventListener('change', function() {
             const specialization = this.value;
             const doctorSelect = document.getElementById('doctor');
             doctorSelect.innerHTML = '<option value="">--Select a Doctor--</option>';
@@ -133,7 +135,7 @@
             }
         });
 
-        document.getElementById('doctor').addEventListener('change', function () {
+        document.getElementById('doctor').addEventListener('change', function() {
             const timeSelect = document.getElementById('time');
             timeSelect.innerHTML = '<option value="">--Select a Time--</option>';
 
@@ -141,10 +143,10 @@
             const endTime = 17; // 5:00 PM
             const interval = 10; // 10 minutes
 
-            // Generate time slots
+            // Add time slots for the morning (8 AM to 12 PM)
             for (let hour = startTime; hour < 12; hour++) {
                 for (let minute = 0; minute < 60; minute += interval) {
-                    const time = formatTime(hour, minute);
+                    const time = `${formatTime(hour)}:${String(minute).padStart(2, '0')}`;
                     const option = document.createElement('option');
                     option.value = time;
                     option.textContent = time;
@@ -152,9 +154,10 @@
                 }
             }
 
+            // Add time slots for the afternoon (1 PM to 5 PM)
             for (let hour = 13; hour < endTime; hour++) {
                 for (let minute = 0; minute < 60; minute += interval) {
-                    const time = formatTime(hour, minute);
+                    const time = `${formatTime(hour)}:${String(minute).padStart(2, '0')}`;
                     const option = document.createElement('option');
                     option.value = time;
                     option.textContent = time;
@@ -163,11 +166,48 @@
             }
         });
 
-        function formatTime(hour, minute) {
+        // Function to format time (AM/PM)
+        function formatTime(hour) {
             const period = hour >= 12 ? 'PM' : 'AM';
-            const formattedHour = hour > 12 ? hour - 12 : hour === 0 ? 12 : hour;
-            return `${String(formattedHour).padStart(2, '0')}:${String(minute).padStart(2, '0')} ${period}`;
+            const formattedHour = hour > 12 ? hour - 12 : hour;
+            return `${formattedHour} ${period}`;
         }
+
+        document.getElementById('appointmentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                appointmentDate: document.getElementById('appointmentDate').value,
+                specialization: document.getElementById('specialization').value,
+                doctor: document.getElementById('doctor').value,
+                time: document.getElementById('time').value,
+                additionalNotes: document.getElementById('additionalNotes').value
+            };
+
+            // Convert formData to a string to download as a text file
+            const dataString = `Appointment Booking:\n
+                Name: ${formData.name}\n
+                Email: ${formData.email}\n
+                Phone: ${formData.phone}\n
+                Appointment Date: ${formData.appointmentDate}\n
+                Specialization: ${formData.specialization}\n
+                Doctor: ${formData.doctor}\n
+                Time: ${formData.time}\n
+                Additional Notes: ${formData.additionalNotes}\n`;
+
+            // Create a Blob and download it
+            const blob = new Blob([dataString], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'appointment-details.txt';
+            link.click();
+
+            alert('Appointment booked successfully and saved as a file!');
+        });
     </script>
 </body>
 </html>
+
